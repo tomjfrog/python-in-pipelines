@@ -46,7 +46,6 @@ pipelines:
             - ls -lah
             - cd dependencyState
             - ls -lah
-            - tree
           onExecute:
             - echo 'on start!'
           onComplete:
