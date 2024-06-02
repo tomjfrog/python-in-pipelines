@@ -40,6 +40,8 @@ pipelines:
         execution:
           onStart:
             - echo 'on start!'
+            - ls -lah
+            - tree
           onExecute:
             - echo 'on start!'
           onComplete:
