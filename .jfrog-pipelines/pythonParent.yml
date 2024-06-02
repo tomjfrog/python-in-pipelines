@@ -23,16 +23,20 @@ pipelines:
   - name: PythonScript
     steps:
       - name: git_checkout
+        type: Bash
         inputResources:
           - *cronTriggerName
         onStart:
+          - echo 'on start!'
         onExecute:
+          - echo 'on execute!'
       - name: execute_python
+        type: Bash
         inputResources:
           - git_checkout
         onStart:
-          - foo
+          - echo 'on start!'
         onExecute:
-          - bar
+          - echo 'on start!'
         onComplete:
-          - fizz
+          - echo 'on Complete!'
