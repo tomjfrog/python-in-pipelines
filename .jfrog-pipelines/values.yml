@@ -3,7 +3,7 @@ metadata:
   cronTriggerResourceName: cron_trigger
 controls:
   cron:
-    enabled: true
+    enabled: false
     expression: "*/3 * * * *"
 repo:
   # Before creating your Pipeline Source, create an integration for one of the
