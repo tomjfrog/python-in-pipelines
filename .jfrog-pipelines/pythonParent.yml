@@ -26,7 +26,7 @@ pipelines:
         type: Bash
         configuration:
           integrations:
-            webhook_basic_auth_b64_encoded
+            - name: webhook_basic_auth_b64_encoded
           environmentVariables:
             RESOURCE_PATH: $res_{{ .Values.namePrefix }}_repo_resourcePath
           inputResources:
