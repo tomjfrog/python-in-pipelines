@@ -25,18 +25,20 @@ pipelines:
       - name: git_checkout
         type: Bash
         inputResources:
-          - *cronTriggerName
-        onStart:
-          - echo 'on start!'
-        onExecute:
-          - echo 'on execute!'
+          - name: *cronTriggerName
+        execution:
+          onStart:
+            - echo 'on start!'
+          onExecute:
+            - echo 'on execute!'
       - name: execute_python
         type: Bash
         inputResources:
-          - git_checkout
-        onStart:
-          - echo 'on start!'
-        onExecute:
-          - echo 'on start!'
-        onComplete:
-          - echo 'on Complete!'
+          - name: git_checkout
+        execution:
+          onStart:
+            - echo 'on start!'
+          onExecute:
+            - echo 'on start!'
+          onComplete:
+            - echo 'on Complete!'
