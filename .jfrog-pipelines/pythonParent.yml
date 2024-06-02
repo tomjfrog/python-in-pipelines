@@ -20,19 +20,19 @@ resources:
     {{ end }}
 
 pipelines:
-  name: PythonScript
-  steps:
-    - name: git_checkout
-      inputResources:
-        - *cronTriggerName
-      onStart:
-      onExecute:
-    - name: execute_python
-      inputResources:
-        - git_checkout
-      onStart:
-        - foo
-      onExecute:
-        - bar
-      onComplete:
-        - fizz
+  - name: PythonScript
+    steps:
+      - name: git_checkout
+        inputResources:
+          - *cronTriggerName
+        onStart:
+        onExecute:
+      - name: execute_python
+        inputResources:
+          - git_checkout
+        onStart:
+          - foo
+        onExecute:
+          - bar
+        onComplete:
+          - fizz
