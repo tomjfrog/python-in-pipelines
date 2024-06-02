@@ -35,7 +35,7 @@ pipelines:
       - name: execute_python
         type: Bash
         configuration:
-          inputResources:
+          inputSteps:
             - name: git_checkout
         execution:
           onStart:
