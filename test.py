@@ -20,7 +20,8 @@ def fetchRepos(authString):
     logging.debug("tmp_mvn_output: %s", response)
     logging.debug("Response payload JSON: %s", response.json())
     response_json = response.json()
-    logging.debug("First three elements of the response: ", response_json[:3])
+    grab_a_few = response_json[:3]
+    logging.debug("First three elements of the response: ", grab_a_few )
 
 
 def triggerChildPipeline(authString):
