@@ -24,9 +24,11 @@ pipelines:
     steps:
       - name: git_checkout
         type: Bash
-        {{ if eq true .Values.controls.cron.enabled }}
+
         configuration:
           inputResources:
+            - name: {{ .Values.namePrefix }}_repo
+        {{ if eq true .Values.controls.cron.enabled }}
             - name: *cronTriggerName
         {{ end }}
         execution:
