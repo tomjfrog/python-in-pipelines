@@ -21,16 +21,19 @@ def fetchRepos(authString):
     logging.debug("Response payload JSON: %s", response.json())
     response_json = response.json()
     grab_a_few = response_json[:3]
-    logging.debug("First three elements of the response: ", grab_a_few )
+    logging.debug("First three elements of the response: ", grab_a_few)
+    return grab_a_few
 
 
-def triggerChildPipeline(authString):
+def triggerChildPipeline(authString, repo_name):
     logging.info("Triggering Child Pipeline...")
     url = "https://tomjfrog-pipelines-api.jfrog.io/v1/projectIntegrations/127/hook"
-    payload = ""
+    payload = {
+        "repo": repo_name
+    }
     auth_header_value = f'Basic {authString}'
     headers = {"Authorization": auth_header_value}
-    response = requests.request("POST", url, data=payload, headers=headers)
+    response = requests.request("POST", url, json=payload, headers=headers)
     logging.debug("tmp_mvn_output: %s", response)
 
 
@@ -41,9 +44,12 @@ def main():
     )
     logging.info("Starting Python Script...")
     basic_auth_string = os.environ['int_webhook_basic_auth_b64_encoded_basic_auth_string']
-    fetchRepos(basic_auth_string)
-    triggerChildPipeline(basic_auth_string)
+    repos = fetchRepos(basic_auth_string)
+    for repo in repos:
+        triggerChildPipeline(basic_auth_string, repo)
+
     logging.info("Finishing Python Script...")
+
 
 if __name__ == "__main__":
     main()
