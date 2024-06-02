@@ -1,0 +1,38 @@
+valuesFilePath: ./values.yml
+__globals:
+  cronTriggerName: &cronTriggerName '{{ default "cron_trigger" .Values.metadata.cronTriggerResourceName }}'
+resources:
+  {{ if .Values.repo.integrationName }}
+  - name: {{ .Values.namePrefix }}_repo
+    type: GitRepo
+    configuration:
+      path: {{ .Values.repo.path }}
+      gitProvider: {{ .Values.repo.integrationName }}
+      branches:
+        include: {{ .Values.repo.branchPattern }}
+  {{ end }}
+
+  {{ if eq true .Values.controls.cron.enabled }}
+  - name: *cronTriggerName
+    type: CronTrigger
+    configuration:
+      interval: "{{ default "0 0 5 ? * 1" .Values.controls.cron.expression }}"
+    {{ end }}
+
+pipelines:
+  name: PythonScript
+  steps:
+    - name: git_checkout
+      inputResources:
+        - *cronTriggerName
+      onStart:
+      onExecute:
+    - name: execute_python
+      inputResources:
+        - git_checkout
+      onStart:
+        - foo
+      onExecute:
+        - bar
+      onComplete:
+        - fizz
