@@ -40,6 +40,9 @@ pipelines:
         execution:
           onStart:
             - echo 'on start!'
+            - echo 'Exploring Directory Structure'
+            - ls -lah
+            - cd dependencyState
             - ls -lah
             - tree
           onExecute:
