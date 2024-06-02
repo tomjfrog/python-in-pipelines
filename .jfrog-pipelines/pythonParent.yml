@@ -39,3 +39,4 @@ pipelines:
             - echo 'Exploring Directory Structure'
             - pushd $RESOURCE_PATH
             - ls -lah
+            - which python3
