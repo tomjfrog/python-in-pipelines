@@ -26,10 +26,9 @@ pipelines:
         type: Bash
         configuration:
           integrations:
-            - webhook_basic_auth_b64_encoded
+            webhook_basic_auth_b64_encoded
           environmentVariables:
             RESOURCE_PATH: $res_{{ .Values.namePrefix }}_repo_resourcePath
-            BASIC_AUTH:
           inputResources:
             - name: {{ .Values.namePrefix }}_repo
         {{ if eq true .Values.controls.cron.enabled }}
