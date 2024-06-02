@@ -25,6 +25,8 @@ pipelines:
       - name: first_step
         type: Bash
         configuration:
+          environmentVariables:
+            RESOURCE_PATH: $res_{{ .Values.namePrefix }}_repo_resourcePath
           inputResources:
             - name: {{ .Values.namePrefix }}_repo
         {{ if eq true .Values.controls.cron.enabled }}
@@ -35,5 +37,5 @@ pipelines:
             - echo 'on start!'
           onExecute:
             - echo 'Exploring Directory Structure'
-            - pushd $res_artifact_cleanup_parent_resourcePath
+            - pushd $RESOURCE_PATH
             - ls -lah
