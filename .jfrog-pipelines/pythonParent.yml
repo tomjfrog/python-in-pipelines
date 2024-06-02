@@ -24,8 +24,9 @@ pipelines:
     steps:
       - name: git_checkout
         type: Bash
-        inputResources:
-          - name: *cronTriggerName
+        configuration:
+          inputResources:
+            - name: *cronTriggerName
         execution:
           onStart:
             - echo 'on start!'
@@ -33,8 +34,9 @@ pipelines:
             - echo 'on execute!'
       - name: execute_python
         type: Bash
-        inputResources:
-          - name: git_checkout
+        configuration:
+          inputResources:
+            - name: git_checkout
         execution:
           onStart:
             - echo 'on start!'
