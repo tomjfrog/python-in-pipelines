@@ -41,4 +41,5 @@ pipelines:
             - echo 'Exploring Directory Structure'
             - pushd $RESOURCE_PATH
             - ls -lah
+            - pip install requests
             - python3 ./test.py
