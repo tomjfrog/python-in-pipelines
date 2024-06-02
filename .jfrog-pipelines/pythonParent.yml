@@ -22,10 +22,11 @@ resources:
 pipelines:
   - name: PythonScript
     steps:
-      - name: git_checkout
+      - name: first_step
         type: Bash
-
         configuration:
+          environmentVariables:
+            - RESOURCE_PATH: $res_{{ .Values.namePrefix }}_repo_path
           inputResources:
             - name: {{ .Values.namePrefix }}_repo
         {{ if eq true .Values.controls.cron.enabled }}
@@ -35,20 +36,6 @@ pipelines:
           onStart:
             - echo 'on start!'
           onExecute:
-            - echo 'on execute!'
-      - name: execute_python
-        type: Bash
-        configuration:
-          inputSteps:
-            - name: git_checkout
-        execution:
-          onStart:
-            - echo 'on start!'
             - echo 'Exploring Directory Structure'
+            - cd $RESOURCE_PATH
             - ls -lah
-            - cd dependencyState
-            - ls -lah
-          onExecute:
-            - echo 'on start!'
-          onComplete:
-            - echo 'on Complete!'
