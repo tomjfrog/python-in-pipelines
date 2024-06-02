@@ -4,7 +4,7 @@ metadata:
 controls:
   cron:
     enabled: true
-    expression: "0 0 5 ? * 1"
+    expression: "*/3 * * * *"
 repo:
   # Before creating your Pipeline Source, create an integration for one of the
   # source control providers and put the integration name here.
@@ -12,7 +12,7 @@ repo:
 
   # this is the full repository path. Usually org/repo or user/project
   # depending on which source control you use.
-  path: "tomjfrog/pipelines-with-python"
+  path: "tomjfrog/python-in-pipelines"
 
   # branchPattern is a regex, so you could listen to all
   # features, for example, with "^feature.*"
