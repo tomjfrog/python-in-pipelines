@@ -24,8 +24,8 @@ pipelines:
     steps:
       - name: git_checkout
         type: Bash
-        configuration:
         {{ if eq true .Values.controls.cron.enabled }}
+        configuration:
           inputResources:
             - name: *cronTriggerName
         {{ end }}
