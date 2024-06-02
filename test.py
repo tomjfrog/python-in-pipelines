@@ -18,6 +18,9 @@ def fetchRepos(authString):
     headers = {"Authorization": auth_header_value}
     response = requests.request("GET", url, data=payload, headers=headers)
     logging.debug("tmp_mvn_output: %s", response)
+    logging.debug("Response payload JSON: %s", response.json())
+    response_json = response.json
+    logging.debug("First three elements of the response: ", response_json[:3])
 
 
 def triggerChildPipeline(authString):
