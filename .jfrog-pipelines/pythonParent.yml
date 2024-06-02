@@ -40,4 +40,6 @@ pipelines:
             - pushd $RESOURCE_PATH
             - ls -lah
             - which python3
+            - which pip
+            - pip install requests
             - python3 ./test.py

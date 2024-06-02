@@ -6,6 +6,7 @@
 import logging
 # import os
 import subprocess
+import requests
 # import sys
 
 def main():
@@ -14,7 +15,7 @@ def main():
         level=logging.DEBUG
     )
     logging.info("Starting Python Script...")
-    test_curl = subprocess.run('curl -X POST https://tomjfrog-pipelines-api.jfrog.io/v1/projectIntegrations/127/hook'.split(' '),
+    test_curl = subprocess.run('curl -X POST https://tomjfrog-pipelines-api.jfrog.io/v1/projectIntegrations/127/hook --header Authorization: Basic foo'.split(' '),
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     logging.debug("tmp_mvn_output: %s", test_curl)
     logging.info("Finishing Python Script...")
