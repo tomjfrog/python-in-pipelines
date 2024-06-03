@@ -2,22 +2,20 @@ valuesFilePath: ./values.yml
 __globals:
   cronTriggerName: &cronTriggerName '{{ default "cron_trigger" .Values.metadata.cronTriggerResourceName }}'
 resources:
-  {{ if .Values.repo.integrationName }}
-  - name: {{ .Values.namePrefix }}_repo
+  - name: artifact_cleanup_parent_repo
     type: GitRepo
     configuration:
       path: {{ .Values.repo.path }}
       gitProvider: {{ .Values.repo.integrationName }}
       branches:
         include: {{ .Values.repo.branchPattern }}
-  {{ end }}
 
   {{ if eq true .Values.controls.cron.enabled }}
   - name: *cronTriggerName
     type: CronTrigger
     configuration:
       interval: "{{ default "0 0 5 ? * 1" .Values.controls.cron.expression }}"
-    {{ end }}
+  {{ end }}
 
 pipelines:
   - name: PythonScript
@@ -38,8 +36,6 @@ pipelines:
           onStart:
             - echo 'on start!'
           onExecute:
-            - echo 'Exploring Directory Structure'
-            - pushd $RESOURCE_PATH
-            - ls -lah
-            - pip install requests
+            - pushd $RESOURCE_PATH # This is needed to change working dir to the root of the checked-out repository
+            - pip install requests # The Python script relies on Requests...you could use urlLib or some other Python std lib HTTP Client
             - python3 ./test.py

@@ -17,13 +17,12 @@ def fetchRepos(authString):
     auth_header_value = f'Basic {basic_auth_string}'
     headers = {"Authorization": auth_header_value}
     response = requests.request("GET", url, data=payload, headers=headers)
-    logging.debug("tmp_mvn_output: %s", response)
-    logging.debug("Response payload JSON: %s", response.json())
+    logging.debug("Fetch Repos Response: %s", response)
+    logging.info("Response payload JSON: %s", response.json())
     response_json = response.json()
-    grab_a_few = response_json[:3]
-    logging.debug("First three elements of the response: ", grab_a_few)
-    return grab_a_few
-
+    # Remove everything except Docker repos
+    docker_repos = [element for element in response_json if element.get('packageType') == 'Docker']
+    return docker_repos
 
 def triggerChildPipeline(authString, repo_name):
     logging.info("Triggering Child Pipeline...")
@@ -34,7 +33,7 @@ def triggerChildPipeline(authString, repo_name):
     auth_header_value = f'Basic {authString}'
     headers = {"Authorization": auth_header_value}
     response = requests.request("POST", url, json=payload, headers=headers)
-    logging.debug("tmp_mvn_output: %s", response)
+    logging.debug("response: %s", response)
 
 
 def main():
@@ -47,7 +46,6 @@ def main():
     repos = fetchRepos(basic_auth_string)
     for repo in repos:
         triggerChildPipeline(basic_auth_string, repo)
-
     logging.info("Finishing Python Script...")
 
 
